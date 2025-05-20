@@ -46,8 +46,11 @@ public class RegisterActivity extends AppCompatActivity {
                 // 这里可以添加注册逻辑，例如保存到本地或发送到服务器
                 // 示例：使用 SPSaveQQ 类保存用户信息
 //                boolean isSaveSuccess = SharedPreferenceSaveData.saveUserInfo(RegisterActivity.this, account, password);
-                boolean isSaveSuccess = FileSaveData.saveUserInfo(RegisterActivity.this, account, password);
+                boolean isSaveSuccess = SharedPreferenceSaveData.saveUserInfo(RegisterActivity.this, account, password);
                 if (isSaveSuccess) {
+                    // 注册成功后直接跳转到主界面
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    startActivity(intent);
                     Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(RegisterActivity.this, "注册失败：该用户名已被注册", Toast.LENGTH_SHORT).show();

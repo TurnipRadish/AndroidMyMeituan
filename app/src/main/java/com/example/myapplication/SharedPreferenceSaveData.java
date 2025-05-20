@@ -37,5 +37,12 @@ public class SharedPreferenceSaveData {
         }
         return userMap;
     }
+
+    // 验证用户登录信息
+    public static boolean verifyUserInfo(Context context, String account, String password) {
+        SharedPreferences sp = context.getSharedPreferences(SHARED_DATA_NAME, Context.MODE_PRIVATE);
+        String storedPassword = sp.getString(account, null);
+        return storedPassword != null && storedPassword.equals(password);
+    }
 }
 
