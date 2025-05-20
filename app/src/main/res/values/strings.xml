@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="author_name">计算机科学与技术1班 罗千翔</string>
+
+    <string name="block1">Block 1</string>
+    <string name="block2">Block 2</string>
+    <string name="block3">Block 3</string>
+    <string name="block4">Block 4</string>
+    <string name="block5">Block 5</string>
+</resources>

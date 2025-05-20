@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="4dp"
+            android:textSize="16sp"
+            android:text="点菜"
+            />
+        <TextView
+            android:id="@+id/tv_discuss"
+            android:layout_toEndOf="@id/tv_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="4dp"
+            android:textSize="16sp"
+            android:text="评价"
+            />
+        <TextView
+            android:id="@+id/tv_business"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@id/tv_discuss"
+            android:textSize="16sp"
+            android:text="商家"
+            />
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="4dp"
+            android:textSize="12sp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/friend_list"
+            android:gravity="center"
+            android:textColor="#ef842c"
+            android:text="好友拼单"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fc_left"
+            android:name="com.example.myapplication.MenuFragmentLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:layout="@layout/menu_left"/>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fc_right"
+            android:name="com.example.myapplication.MenuFragmentRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            tools:layout="@layout/menu_right"/>
+    </LinearLayout>
+</LinearLayout>
