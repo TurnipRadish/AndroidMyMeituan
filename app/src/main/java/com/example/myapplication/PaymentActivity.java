@@ -20,16 +20,16 @@ public class PaymentActivity extends AppCompatActivity {
         // 获取总价钱
         String totalPrice = getIntent().getStringExtra("totalPrice");
         tvTotalPrice = findViewById(R.id.tv_total_price);
-        tvTotalPrice.setText(totalPrice);
+        tvTotalPrice.setText("¥" + totalPrice);
 
         // 确认付钱按钮
-        btnConfirmPayment = findViewById(R.id.btn_confirm_payment);
-        btnConfirmPayment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 这里可以添加支付逻辑
-            }
-        });
+//        btnConfirmPayment = findViewById(R.id.btn_confirm_payment);
+//        btnConfirmPayment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // 这里可以添加支付逻辑
+//            }
+//        });
 
         // 返回按钮
         btnBack = findViewById(R.id.btn_back);

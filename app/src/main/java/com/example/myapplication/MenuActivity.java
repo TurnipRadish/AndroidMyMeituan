@@ -38,7 +38,7 @@ public class MenuActivity extends AppCompatActivity {
         onBindView();
 
         SQLiteStudioService.instance().start(this);
-        dbHelper = new DatabaseHelper(this, "meituan.db", null, 1);
+        dbHelper = new DatabaseHelper(this, "meituan1.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
         // 测试模式下生成测试数据

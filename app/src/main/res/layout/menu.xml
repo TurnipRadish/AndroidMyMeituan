@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="4dp"
+        android:layout_marginTop="32dp"
         android:gravity="center_vertical">
 
         <TextView
@@ -61,14 +62,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="80dp">
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fc_left"
             android:name="com.example.myapplication.MenuFragmentLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:layout="@layout/menu_left"/>
+            tools:layout="@layout/menu_left" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fc_right"
@@ -76,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            tools:layout="@layout/menu_right"/>
+            tools:layout="@layout/menu_right" />
     </LinearLayout>
 
     <LinearLayout
@@ -93,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RMB"
+            android:text="¥"
             android:gravity="right"
             android:textSize="24sp"
             android:textStyle="bold"
