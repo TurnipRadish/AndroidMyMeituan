@@ -30,5 +30,6 @@
         </activity>
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".MenuActivity"/>
+        <activity android:name=".PaymentActivity"/>
     </application>
 </manifest>

@@ -94,7 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Random random = new Random();
         String[] names = {"爆款*肥牛鱼豆腐骨肉相连三荤五素一份米饭", "豪华双人套餐", "素菜主义一人套餐", "精选牛排套餐", "海鲜大拼盘"};
         String[] sales = {"月售520 好评度80%", "月售300 好评度90%", "月售450 好评度85%"};
-        String[] prices = {"$23", "$41", "$35", "$50", "$28"};
+        String[] prices = {"23", "41", "35", "50", "28"};
         int[] imgMustIds = {R.drawable.must_buy_one, R.drawable.must_buy_two, R.drawable.must_buy_three};
         int[] imgRecomIds = {R.drawable.recom_one, R.drawable.recom_two, R.drawable.recom_three};
 
@@ -102,7 +102,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String category = random.nextBoolean() ? "1" : "2";
             String name = names[random.nextInt(names.length)];
             String sale = sales[random.nextInt(sales.length)];
-            String price = prices[random.nextInt(prices.length)];
+            String price = "¥" + prices[random.nextInt(prices.length)];
             int imgRes;
             if (category.equals("1")) {
                 imgRes = imgMustIds[random.nextInt(imgMustIds.length)];

@@ -1,39 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:padding="5dp">
+
+    <!-- 左侧菜品图片 -->
     <ImageView
         android:id="@+id/iv_img"
         android:layout_width="70dp"
         android:layout_height="70dp"/>
+
+    <!-- 中间：菜品信息 -->
     <LinearLayout
+        android:id="@+id/ll_dish_info"
         android:layout_width="match_parent"
+        android:layout_toRightOf="@id/iv_img"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
         <TextView
-            android:textSize="14sp"
-            android:padding="2dp"
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:padding="2dp"/>
+
         <TextView
+            android:id="@+id/tv_sale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#868788"
-            android:id="@+id/tv_sale"
-
             android:textSize="12sp"/>
+
         <TextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-
             android:textSize="12sp"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- 减号按钮 -->
+            <TextView
+                android:id="@+id/tv_decrease_amount"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:text="—"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:background="@drawable/btn_round_bg"
+                android:layout_toStartOf="@+id/tv_quantity"/>
+
+            <!-- 数量显示 -->
+            <TextView
+                android:id="@+id/tv_quantity"
+                android:layout_width="64dp"
+                android:layout_height="32dp"
+                android:text="1"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:padding="4dp"
+                android:background="@drawable/textview_border_selector"
+                android:layout_toStartOf="@id/tv_increase_amount"
+                />
+
+            <!-- 加号按钮 -->
+            <TextView
+                android:id="@+id/tv_increase_amount"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:background="@drawable/btn_round_bg"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <!-- 右侧：数量选择框 -->
+
+</RelativeLayout>

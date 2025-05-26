@@ -2,12 +2,18 @@ package com.example.myapplication;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.content.Intent;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +22,10 @@ import java.util.List;
 import pl.com.salsoft.sqlitestudioremote.SQLiteStudioService;
 
 public class MenuActivity extends AppCompatActivity {
+    public static double TotalPrice = 0.0;
+    TextView tv_total_money;
+    Button btn_checktou;
+
     private HashMap<String, List<Dish>> menuList = new HashMap<>();
     private DatabaseHelper dbHelper;  // 新增数据库帮助类实例
     private DatabaseHelper dbHelper1;
@@ -24,6 +34,9 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
+
+        onBindView();
+
         SQLiteStudioService.instance().start(this);
         dbHelper = new DatabaseHelper(this, "meituan.db", null, 1);
         db = dbHelper.getWritableDatabase();
@@ -39,6 +52,17 @@ public class MenuActivity extends AppCompatActivity {
         // 从数据库读取数据（替换原硬编码数组）
         menuList.put("1", dbHelper.getDishesByCategory("1"));  // 推荐类别
         menuList.put("2", dbHelper.getDishesByCategory("2"));  // 必买类别
+    }
+
+    void onBindView() {
+        tv_total_money = findViewById(R.id.tv_total_money);
+
+        btn_checktou = findViewById(R.id.btn_checkout);
+        btn_checktou.setOnClickListener(v -> {
+            Intent intent = new Intent(MenuActivity.this, PaymentActivity.class);
+            intent.putExtra("totalPrice", String.valueOf(TotalPrice));
+            startActivity(intent);
+        });
     }
 
     private List<Dish> createFoodList(String[] names, String[] prices, int[] imgs, String[] sales) {
@@ -68,6 +92,11 @@ public class MenuActivity extends AppCompatActivity {
         return menuList.get(key);
     }
 
+    public void addTotalPrice(double price) {
+        TotalPrice += price;
+
+        tv_total_money.setText(String.valueOf(TotalPrice));
+    }
     
     @Override
     protected void onDestroy() {

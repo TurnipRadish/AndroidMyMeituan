@@ -2,10 +2,12 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,8 +20,11 @@ import java.io.Serializable;
 import java.util.List;
 
 public class MenuFragmentRight extends Fragment {
-    public MenuFragmentRight(){
+    public static final int MAX_QUANTITY = 50;
 
+    public static double TotalMoney = 0.0;
+
+    public MenuFragmentRight() {
     }
     public MenuFragmentRight getInstance(List<Dish> list){
         // 使用bundle存储数据
@@ -80,11 +85,7 @@ public class MenuFragmentRight extends Fragment {
             ViewHolder holder;
             if (convertView == null) {
                 convertView = View.inflate(this.context, R.layout.menu_list_item, null);
-                holder = new MenuFragmentRight.ViewHolder();
-                holder.tv_name = convertView.findViewById(R.id.tv_name);
-                holder.tv_sale = convertView.findViewById(R.id.tv_sale);
-                holder.tv_price = convertView.findViewById(R.id.tv_price);
-                holder.iv_img = convertView.findViewById(R.id.iv_img);
+                holder = new ViewHolder().onBindView(convertView).onBindClickEvent(context);
                 // 使用tag存储holder
                 convertView.setTag(holder);
             }
@@ -101,7 +102,52 @@ public class MenuFragmentRight extends Fragment {
     }
 
     static class ViewHolder {
-        TextView tv_name,tv_sale,tv_price;
+        TextView tv_name,tv_sale,tv_price, tv_increase_amount, tv_decrease_amount, tv_quantity,
+                tv_total_money;
+        Button btn_checkout;
         ImageView iv_img;
+
+        private ViewHolder onBindView(View convertView) {
+            tv_decrease_amount = convertView.findViewById(R.id.tv_decrease_amount);
+            tv_increase_amount = convertView.findViewById(R.id.tv_increase_amount);
+            tv_quantity = convertView.findViewById(R.id.tv_quantity);
+            tv_name = convertView.findViewById(R.id.tv_name);
+            tv_sale = convertView.findViewById(R.id.tv_sale);
+            tv_price = convertView.findViewById(R.id.tv_price);
+            iv_img = convertView.findViewById(R.id.iv_img);
+            btn_checkout = convertView.findViewById(R.id.btn_checkout);
+
+            return this;
+        }
+
+        private ViewHolder onBindClickEvent(Context context) {
+            tv_decrease_amount.setOnClickListener(v -> {
+                if (context instanceof MenuActivity) {
+                    MenuActivity activity = (MenuActivity) context;
+                    double price = Double.parseDouble(tv_price.getText().toString().substring(1));
+                    int quantity = Integer.parseInt(tv_quantity.getText().toString());
+                    if (quantity > 1) {
+                        quantity--;
+                        tv_quantity.setText(String.valueOf(quantity));
+                        activity.addTotalPrice(-price);
+                    }
+                }
+            });
+
+            tv_increase_amount.setOnClickListener(v -> {
+                if (context instanceof MenuActivity) {
+                    MenuActivity activity = (MenuActivity) context;
+                    double price = Double.parseDouble(tv_price.getText().toString().substring(1));
+                    int quantity = Integer.parseInt(tv_quantity.getText().toString());
+                    if (quantity < MenuFragmentRight.MAX_QUANTITY) {
+                        quantity++;
+                        tv_quantity.setText(String.valueOf(quantity));
+                        activity.addTotalPrice(price);
+                    }
+                }
+            });
+
+            return this;
+        }
     }
 }
