@@ -13,21 +13,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
+    DatabaseManager databaseManager;
+
     EditText etAccount;
     EditText etPassword;
     Button btnRegister;
     TextView btnGotoLogin;
-    SQLiteDatabase db;
-
-    SQLiteDatabase the;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
-        // 打开数据库
-        db = SQLiteDatabase.openDatabase(getApplicationInfo().dataDir + "/databases/meituan1.db", null, SQLiteDatabase.ENABLE_WRITE_AHEAD_LOGGING);
+        databaseManager = DatabaseManager.getInstance(this);
 
         // 绑定视图
         setBindView();
@@ -78,33 +76,13 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // 尝试写入用户信息
-
-        //DatabaseHelper dbHelper = new DatabaseHelper(this, "meituan.db", null, 1);
-
-        //DatabaseHelper dbHelper = new DatabaseHelper(this, getApplicationInfo().dataDir + "/databases/meituan1.db", null, 1);
-        //SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        // 检查用户名是否已存在
-        String[] projection = {"username"};
-        String selection = "username = ?";
-        String[] selectionArgs = {account};
-        Cursor cursor = db.query("users", projection, selection, selectionArgs, null, null, null);
-
-        if (cursor.getCount() > 0) {
-            // 用户名已存在，注册失败
+        if (databaseManager.isUsernameExists(account)){
             Toast.makeText(RegisterActivity.this, "注册失败：该用户名已被注册", Toast.LENGTH_SHORT).show();
-            cursor.close();
             return;
         }
-        cursor.close();
 
         // 插入新用户数据
-        android.content.ContentValues values = new android.content.ContentValues();
-        values.put("username", account);
-        values.put("password", password);
-        long newRowId = db.insert("users", null, values);
-
+        long newRowId = databaseManager.insertUser(account, password);
         if (newRowId != -1) {
             // 数据库写入成功，尝试写入 SharedPreferences
             boolean isSaveSuccess = SharedPreferenceSaveData.saveUserInfo(RegisterActivity.this, account, password);
@@ -121,8 +99,5 @@ public class RegisterActivity extends AppCompatActivity {
             // 数据库写入失败
             Toast.makeText(RegisterActivity.this, "注册失败：保存用户信息到数据库失败", Toast.LENGTH_SHORT).show();
         }
-
-        // 关闭数据库连接
-        db.close();
     }
 }

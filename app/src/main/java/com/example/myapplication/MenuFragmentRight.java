@@ -22,16 +22,12 @@ import java.util.List;
 public class MenuFragmentRight extends Fragment {
     public static final int MAX_QUANTITY = 50;
 
-    public static double TotalMoney = 0.0;
-
     public MenuFragmentRight() {
     }
     public MenuFragmentRight getInstance(List<Dish> list){
-        // 使用bundle存储数据
         Bundle bundle = new Bundle();
         bundle.putSerializable("list", (Serializable) list);
 
-        // 利用bundle传递参数，以便在其他生命周期函数中使用
         MenuFragmentRight rightFragment = new MenuFragmentRight();
         rightFragment.setArguments(bundle);
         return rightFragment;
@@ -102,8 +98,7 @@ public class MenuFragmentRight extends Fragment {
     }
 
     static class ViewHolder {
-        TextView tv_name,tv_sale,tv_price, tv_increase_amount, tv_decrease_amount, tv_quantity,
-                tv_total_money;
+        TextView tv_name,tv_sale,tv_price, tv_increase_amount, tv_decrease_amount, tv_quantity;
         Button btn_checkout;
         ImageView iv_img;
 

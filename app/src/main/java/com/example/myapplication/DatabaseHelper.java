@@ -13,6 +13,7 @@ import java.util.Random;
 public class DatabaseHelper extends SQLiteOpenHelper {
     // 数据库基本信息
     private static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_MEITUAN_NAME = "meituan1.db";
     // 菜品表结构
     private static final String TABLE_MENU_LIST = "dishes";
     private static final String COLUMN_ID = "_id";

@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -53,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                 String selectedUser = data.getStringExtra("selectedUser");
                 String selectedPassword = data.getStringExtra("selectedPassword");
                 et_account.setText(selectedUser);
-                et_password.setText(selectedPassword);
+                //et_password.setText(selectedPassword);
             }
         }
     });
@@ -62,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         if (userInf != null && !userInf.isEmpty()) {
             Map.Entry<String, String> firstEntry = userInf.entrySet().iterator().next();
             et_account.setText(firstEntry.getKey());
-            et_password.setText(firstEntry.getValue());
+            //et_password.setText(firstEntry.getValue());
         }
     }
 
@@ -118,38 +119,21 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // 输出账号密码，用于调试
-        Log.i("test", account);
-        Log.i("test", password);
+        Log.i("test", "当前用户=" + account);
+        Log.i("test", "输入的密码=" +password);
 
-        // 打开数据库
-        SQLiteDatabase db = SQLiteDatabase.openDatabase(getApplicationInfo().dataDir + "/databases/meituan1.db", null, SQLiteDatabase.OPEN_READONLY);
-        String[] projection = { "password" };
-        String selection = "username = ?";
-        String[] selectionArgs = { account };
-        Cursor cursor = db.query("users", projection, selection, selectionArgs, null, null, null);
-
-        if (cursor.getCount() == 0) {
+        if (!DatabaseManager.getInstance(this).isUsernameExists(account)) {
             Toast.makeText(this, "不存在该用户", Toast.LENGTH_SHORT).show();
         } else {
-            cursor.moveToFirst();
-            int passwordIndex = cursor.getColumnIndex("password");
-            if (passwordIndex >= 0) {
-                String dbPassword = cursor.getString(passwordIndex);
-                if (!dbPassword.equals(password)) {
-                    Toast.makeText(this, "密码错误", Toast.LENGTH_SHORT).show();
-                } else {
-                    // 记录到 sharedPreference 中
-                    SharedPreferenceSaveData.saveUserInfo(this, account, password);
-                    Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
-                    Intent intentToMenu = new Intent(LoginActivity.this, MenuActivity.class);
-                    startActivity(intentToMenu);
-                }
+           if (!DatabaseManager.getInstance(this).checkUserPassword(account, password)) {
+               Toast.makeText(this, "密码错误", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "数据库表结构错误，未找到密码字段", Toast.LENGTH_SHORT).show();
+                // 记录到 sharedPreference 中
+                SharedPreferenceSaveData.saveUserInfo(this, account, password);
+                Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+                Intent intentToMenu = new Intent(LoginActivity.this, MenuActivity.class);
+                startActivity(intentToMenu);
             }
         }
-
-        cursor.close();
-        db.close();
     }
 }

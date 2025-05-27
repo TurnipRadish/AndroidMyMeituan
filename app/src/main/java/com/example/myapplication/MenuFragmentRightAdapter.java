@@ -69,8 +69,6 @@ public class MenuFragmentRightAdapter extends BaseAdapter {
                 }
             });
 
-            Log.e("test", "???");
-
             holder.tv_increase_amount.setOnClickListener(v -> {
                 Log.e("test", "点击增加数量按钮");
                 int quantity = Integer.parseInt(holder.tv_qantity.getText().toString());
